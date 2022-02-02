@@ -4,16 +4,19 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
 import com.exam.entity.ExamManage;
+import com.exam.service.ExamManageService;
 import com.exam.serviceimpl.ExamManageServiceImpl;
 import com.exam.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ExamManageController {
 
     @Autowired
-    private ExamManageServiceImpl examManageService;
+    private ExamManageService examManageService;
 
     @GetMapping("/exams")
     public ApiResult findAll(){
@@ -25,10 +28,9 @@ public class ExamManageController {
 
     @GetMapping("/exams/{page}/{size}")
     public ApiResult findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-        System.out.println("分页查询所有试卷");
         ApiResult apiResult;
         Page<ExamManage> examManage = new Page<>(page,size);
-        IPage<ExamManage> all = examManageService.findAll(examManage);
+        IPage<ExamManage> all = examManageService.page(examManage);
         apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", all);
         return apiResult;
     }
@@ -76,5 +78,14 @@ public class ExamManageController {
             return ApiResultHandler.buildApiResult(200,"请求成功",res);
         }
         return ApiResultHandler.buildApiResult(400,"请求失败",res);
+    }
+
+    @GetMapping("/exams/getUnbegin/{page}/{size}")
+    public ApiResult getUnbegin(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+
+        Page<ExamManage> p = new Page<>(page,size);
+        IPage<ExamManage> all = examManageService.getUnBeginExam(p);
+
+        return ApiResultHandler.buildApiResult(200,"请求成功",all);
     }
 }

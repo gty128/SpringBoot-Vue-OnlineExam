@@ -1,41 +1,25 @@
 package com.exam.serviceimpl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.exam.entity.Admin;
 import com.exam.mapper.AdminMapper;
 import com.exam.service.AdminService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 @Service
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl  extends ServiceImpl<AdminMapper,Admin> implements AdminService {
 
-    @Autowired
-    private AdminMapper adminMapper;
 
-    @Override
-    public List<Admin> findAll() {
-        return adminMapper.findAll();
-    }
-
-    @Override
-    public Admin findById(Integer adminId) {
-        return adminMapper.findById(adminId);
-    }
-
-    @Override
-    public int deleteById(int adminId) {
-        return adminMapper.deleteById(adminId);
-    }
-
-    @Override
-    public int update(Admin admin) {
-        return adminMapper.update(admin);
-    }
-
-    @Override
-    public int add(Admin admin) {
-        return 0;
-    }
 }

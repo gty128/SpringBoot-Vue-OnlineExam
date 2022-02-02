@@ -2,11 +2,12 @@ package com.exam.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.exam.entity.ExamManage;
 
 import java.util.List;
 
-public interface ExamManageService {
+public interface ExamManageService extends IService<ExamManage> {
 
     /**
      * 不分页查询所有考试信息
@@ -23,4 +24,6 @@ public interface ExamManageService {
     int add(ExamManage exammanage);
 
     ExamManage findOnlyPaperId();
+
+    IPage<ExamManage> getUnBeginExam(Page<ExamManage> page);
 }

@@ -1,46 +1,42 @@
 package com.exam.controller;
 
+import com.exam.common.AjaxResult;
 import com.exam.entity.Admin;
-import com.exam.entity.ApiResult;
-import com.exam.serviceimpl.AdminServiceImpl;
-import com.exam.util.ApiResultHandler;
+import com.exam.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+@RequestMapping("/admin")
 public class AdminController {
 
-    private AdminServiceImpl adminService;
     @Autowired
-    public AdminController(AdminServiceImpl adminService){
-        this.adminService = adminService;
-    }
+    private AdminService adminService;
 
     @GetMapping("/admins")
-    public ApiResult findAll(){
-        System.out.println("查询全部");
-        return ApiResultHandler.success(adminService.findAll());
+    public AjaxResult findAll(){
+        return AjaxResult.success(adminService.list());
     }
 
     @GetMapping("/admin/{adminId}")
-    public ApiResult findById(@PathVariable("adminId") Integer adminId){
-        System.out.println("根据ID查找");
-        return ApiResultHandler.success(adminService.findById(adminId));
+    public AjaxResult findById(@PathVariable("adminId") Integer adminId){
+        return AjaxResult.success(adminService.getById(adminId));
     }
 
     @DeleteMapping("/admin/{adminId}")
-    public ApiResult deleteById(@PathVariable("adminId") Integer adminId){
-        adminService.deleteById(adminId);
-        return ApiResultHandler.success();
+    public AjaxResult deleteById(@PathVariable("adminId") Integer adminId){
+        adminService.removeById(adminId);
+        return AjaxResult.success();
     }
 
     @PutMapping("/admin/{adminId}")
-    public ApiResult update(@PathVariable("adminId") Integer adminId, Admin admin){
-        return ApiResultHandler.success(adminService.update(admin));
+    public AjaxResult update(@PathVariable("adminId") Integer adminId, Admin admin){
+        return AjaxResult.success(adminService.saveOrUpdate(admin));
     }
 
     @PostMapping("/admin")
-    public ApiResult add(Admin admin){
-        return ApiResultHandler.success(adminService.add(admin));
+    public AjaxResult add(Admin admin){
+        return AjaxResult.success(adminService.save(admin));
     }
 }

@@ -5,13 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.mapper.AnswerMapper;
 import com.exam.service.AnswerService;
 import com.exam.vo.AnswerVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
 
-    @Autowired
+
     private AnswerMapper answerMapper;
 
     @Override

@@ -1,18 +1,11 @@
 package com.exam.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.exam.entity.Admin;
+import com.exam.mapper.AdminMapper;
 
 import java.util.List;
 
-public interface AdminService{
+public interface AdminService extends IService<Admin> {
 
-    public List<Admin> findAll();
-
-    public Admin findById(Integer adminId);
-
-    public int deleteById(int adminId);
-
-    public int update(Admin admin);
-
-    public int add(Admin admin);
 }

@@ -10,8 +10,8 @@
           </el-badge>
         </li>
         <li class="order">
-          <el-badge :value="1" class="item" type="primary">
-            <span>未开始</span>
+          <el-badge :value="unBeginCount" class="item" type="primary" @click="getUnbegin">
+            <span @click="getUnbegin">未开始</span>
           </el-badge>
         </li>
         <li class="order">
@@ -65,7 +65,8 @@ export default {
         current: 1, //当前页
         total: null, //记录条数
         size: 6 //每页条数
-      }
+      },
+      unBeginCount:0
     }
   },
   created() {
@@ -73,7 +74,7 @@ export default {
     this.loading = true
   },
   // watch: {
-    
+
   // },
   methods: {
     //获取当前所有考试信息
@@ -112,6 +113,15 @@ export default {
     toExamMsg(examCode) {
       this.$router.push({path: '/examMsg', query: {examCode: examCode}})
       console.log(examCode)
+    },
+    getUnbegin(){
+      this.$axios(`/api/exams/getUnbegin/${this.pagination.current}/${this.pagination.size}`).then(res => {
+        this.pagination = res.data.data
+        this.loading = false
+        this.unBeginCount = this.pagination.records.length
+        console.log(this.pagination)
+      }).catch(error => {
+      })
     }
   }
 }

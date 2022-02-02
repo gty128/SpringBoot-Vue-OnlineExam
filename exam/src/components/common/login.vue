@@ -64,7 +64,6 @@ export default {
   methods: {
     //用户登录请求后台处理
     login() {
-      console.log("登录操作执行-------");
       this.$axios({
         url: `/api/login`,
         method: 'post',
@@ -183,7 +182,7 @@ a:link {
   font-size: 30px;
 }
 .bottom .container .title {
-  margin: 30px 0px;;
+  margin: 30px 0px;
 }
 .bottom .submit .row-login {
   width: 100%;

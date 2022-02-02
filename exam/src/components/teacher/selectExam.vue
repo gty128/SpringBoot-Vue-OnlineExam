@@ -1,7 +1,7 @@
 //查询所有考试
 <template>
   <div class="exam">
-    <el-table :data="pagination.records" border>
+    <el-table :data="pagination.records" border v-loading="loading">
       <el-table-column fixed="left" prop="source" label="试卷名称" width="180"></el-table-column>
       <el-table-column prop="description" label="介绍" width="200"></el-table-column>
       <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
@@ -88,7 +88,8 @@ export default {
         total: null, //记录条数
         size: 4 //每页条数
       },
-      dialogVisible: false
+      dialogVisible: false,
+      loading: true
     }
   },
   created() {
@@ -146,8 +147,10 @@ export default {
     getExamInfo() { //分页查询所有试卷信息
       this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
         this.pagination = res.data.data
+        this.loading = false
       }).catch(error => {
       })
+
     },
     //改变当前记录条数
     handleSizeChange(val) {
