@@ -1,6 +1,10 @@
 package com.exam.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 public class Student {
+    @TableId(type = IdType.AUTO)
     private Integer studentId;
 
     private String studentName;

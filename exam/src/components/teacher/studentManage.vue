@@ -31,7 +31,7 @@
       title="编辑试卷信息"
       :visible.sync="dialogVisible"
       width="30%"
-      :before-close="handleClose">
+    >
       <section class="update">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="姓名">
@@ -106,11 +106,7 @@ export default {
       })
     },
     deleteById(studentId) { //删除当前学生
-      this.$confirm("确定删除当前学生吗？删除后无法恢复","Warning",{
-        confirmButtonText: '确定删除',
-        cancelButtonText: '算了,留着吧',
-        type: 'danger'
-      }).then(()=> { //确认删除
+      this.$confirm("确定删除当前学生吗？").then(()=> { //确认删除
         this.$axios({
           url: `/api/student/${studentId}`,
           method: 'delete',
@@ -130,7 +126,6 @@ export default {
           ...this.form
         }
       }).then(res => {
-        console.log(res)
         if(res.data.code ==200) {
           this.$message({
             message: '更新成功',
@@ -139,13 +134,7 @@ export default {
         }
         this.getStudentInfo()
       })
-    },
-    handleClose(done) { //关闭提醒
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-        }).catch(_ => {});
-    },
+    }
   }
 };
 </script>

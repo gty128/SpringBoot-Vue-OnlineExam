@@ -2,21 +2,11 @@ package com.exam.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.exam.entity.Teacher;
 
 import java.util.List;
 
-public interface TeacherService {
+public interface TeacherService extends IService<Teacher> {
 
-    IPage<Teacher> findAll(Page<Teacher> page);
-
-    public List<Teacher> findAll();
-
-    public Teacher findById(Integer teacherId);
-
-    public int deleteById(Integer teacherId);
-
-    public int update(Teacher teacher);
-
-    public int add(Teacher teacher);
 }
