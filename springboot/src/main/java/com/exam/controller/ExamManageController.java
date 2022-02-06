@@ -2,15 +2,16 @@ package com.exam.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.exam.common.AjaxResult;
 import com.exam.entity.ApiResult;
 import com.exam.entity.ExamManage;
 import com.exam.service.ExamManageService;
-import com.exam.serviceimpl.ExamManageServiceImpl;
 import com.exam.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 public class ExamManageController {
@@ -19,73 +20,48 @@ public class ExamManageController {
     private ExamManageService examManageService;
 
     @GetMapping("/exams")
-    public ApiResult findAll(){
-        System.out.println("不分页查询所有试卷");
-        ApiResult apiResult;
-        apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", examManageService.findAll());
-        return apiResult;
+    public AjaxResult findAll(){
+        List<ExamManage> list = examManageService.list();
+        return AjaxResult.success(list);
     }
 
     @GetMapping("/exams/{page}/{size}")
-    public ApiResult findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-        ApiResult apiResult;
-        Page<ExamManage> examManage = new Page<>(page,size);
-        IPage<ExamManage> all = examManageService.page(examManage);
-        apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", all);
-        return apiResult;
+    public AjaxResult findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
+        Page<ExamManage> examManagePage = new Page<>(page,size);
+        IPage<ExamManage> page1 = examManageService.page(examManagePage);
+        return AjaxResult.success(page1);
     }
 
     @GetMapping("/exam/{examCode}")
-    public ApiResult findById(@PathVariable("examCode") Integer examCode){
-        System.out.println("根据ID查找");
-        ExamManage res = examManageService.findById(examCode);
-        if(res == null) {
-            return ApiResultHandler.buildApiResult(10000,"考试编号不存在",null);
-        }
-        return ApiResultHandler.buildApiResult(200,"请求成功！",res);
+    public AjaxResult findById(@PathVariable("examCode") Integer examCode){
+        ExamManage exam = examManageService.getById(examCode);
+        return AjaxResult.success(exam);
     }
 
     @DeleteMapping("/exam/{examCode}")
-    public ApiResult deleteById(@PathVariable("examCode") Integer examCode){
-        int res = examManageService.delete(examCode);
-        return ApiResultHandler.buildApiResult(200,"删除成功",res);
+    public AjaxResult deleteById(@PathVariable("examCode") Integer examCode){
+        boolean b = examManageService.removeById(examCode);
+        return AjaxResult.success(b);
     }
 
     @PutMapping("/exam")
-    public ApiResult update(@RequestBody ExamManage exammanage){
-        int res = examManageService.update(exammanage);
-//        if (res == 0) {
-//            return ApiResultHandler.buildApiResult(20000,"请求参数错误");
-//        }
-        System.out.print("更新操作执行---");
-        return ApiResultHandler.buildApiResult(200,"更新成功",res);
+    public AjaxResult update(@RequestBody ExamManage exammanage){
+        boolean b = examManageService.saveOrUpdate(exammanage);
+        return AjaxResult.success(b);
     }
 
     @PostMapping("/exam")
-    public ApiResult add(@RequestBody ExamManage exammanage){
-        int res = examManageService.add(exammanage);
-        if (res ==1) {
-            return ApiResultHandler.buildApiResult(200, "添加成功", res);
-        } else {
-            return  ApiResultHandler.buildApiResult(400,"添加失败",res);
-        }
+    public AjaxResult add(@RequestBody ExamManage exammanage){
+        examManageService.addExam(exammanage);
+        return AjaxResult.success();
     }
 
-    @GetMapping("/examManagePaperId")
-    public ApiResult findOnlyPaperId() {
-        ExamManage res = examManageService.findOnlyPaperId();
-        if (res != null) {
-            return ApiResultHandler.buildApiResult(200,"请求成功",res);
-        }
-        return ApiResultHandler.buildApiResult(400,"请求失败",res);
-    }
+
 
     @GetMapping("/exams/getUnbegin/{page}/{size}")
-    public ApiResult getUnbegin(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-
+    public AjaxResult getUnbegin(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
         Page<ExamManage> p = new Page<>(page,size);
         IPage<ExamManage> all = examManageService.getUnBeginExam(p);
-
-        return ApiResultHandler.buildApiResult(200,"请求成功",all);
+        return AjaxResult.success(all);
     }
 }

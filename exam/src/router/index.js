@@ -7,7 +7,8 @@ export default new Router({
     {
       path: '/',
       name: 'login', //登录界面
-      component: () => import('@/components/common/login')
+      // component: () => import('@/components/common/login')
+      component: () => import('@/components/movie/currentMovie')
     },
     {
       path: '/index', //教师主页

@@ -33,11 +33,11 @@ public class StudentController {
        return AjaxResult.success(studentService.removeById(studentId));
     }
 //
-//    @PutMapping("/studentPWD")
-//    public ApiResult updatePwd(@RequestBody Student student) {
-//        studentService.updatePwd(student);
-//        return ApiResultHandler.buildApiResult(200,"密码更新成功",null);
-//    }
+    @PutMapping("/studentPWD")
+    public AjaxResult updatePwd(@RequestBody Student student) {
+        boolean b = studentService.saveOrUpdate(student);
+        return AjaxResult.success(b);
+    }
     @PutMapping("/student")
     public AjaxResult update(@RequestBody Student student) {
         return AjaxResult.success( studentService.saveOrUpdate(student));

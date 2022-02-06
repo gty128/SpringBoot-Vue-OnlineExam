@@ -74,7 +74,7 @@ export default {
   .page {
     margin-top: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
   }
   .edit{

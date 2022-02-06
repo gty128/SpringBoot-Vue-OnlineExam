@@ -49,22 +49,22 @@ export default {
         })
         .catch(error => {});
     },
-    //改变当前记录条数
-    handleSizeChange(val) {
-      this.pagination.size = val;
-      this.getAnswerInfo();
-    },
-    //改变当前页码，重新发送请求
-    handleCurrentChange(val) {
-      this.pagination.current = val;
-      this.getAnswerInfo();
-    },
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex % 2 == 0) {
         return "warning-row";
       } else {
         return "success-row";
       }
+    },
+    //改变当前记录条数
+    handleSizeChange(val) {
+      this.pagination.size = val
+      this.getAnswerInfo()
+    },
+    //改变当前页码，重新发送请求
+    handleCurrentChange(val) {
+      this.pagination.current = val
+      this.getAnswerInfo()
     }
   }
 };
@@ -87,7 +87,7 @@ export default {
 }
   .el-table .warning-row {
     background: #000 !important;
-    
+
   }
 
   .el-table .success-row {

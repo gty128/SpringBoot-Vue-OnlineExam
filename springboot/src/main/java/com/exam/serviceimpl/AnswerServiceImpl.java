@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AnswerServiceImpl implements AnswerService {
+public class AnswerServiceImpl  implements AnswerService {
 
 
     private AnswerMapper answerMapper;

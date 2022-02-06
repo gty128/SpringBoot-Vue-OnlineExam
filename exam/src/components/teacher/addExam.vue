@@ -75,29 +75,26 @@ export default {
     onSubmit() {
       let examDate = this.formatTime(this.form.examDate)
       this.form.examDate = examDate.substr(0,10)
-      this.$axios(`/api/examManagePaperId`).then(res => {
-        this.form.paperId = res.data.data.paperId + 1 //实现paperId自增1
-        this.$axios({
-          url: '/api/exam',
-          method: 'post',
-          data: {
-            ...this.form
-          }
-        }).then(res => {
-          if(res.data.code == 200) {
-            this.$message({
-              message: '数据添加成功',
-              type: 'success'
-            })
-            this.$router.push({path: '/selectExam'})
-          }
-        })
+      this.$axios({
+        url: '/api/exam',
+        method: 'post',
+        data: {
+          ...this.form
+        }
+      }).then(res => {
+        if(res.data.code == 200) {
+          this.$message({
+            message: '数据添加成功',
+            type: 'success'
+          })
+          this.$router.push({path: '/selectExam'})
+        }
       })
     },
     cancel() { //取消按钮
       this.form = {}
     },
-    
+
   }
 };
 </script>
